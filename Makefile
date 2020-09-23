@@ -98,7 +98,13 @@ ifneq ($(cjson-pass)$(system-cjson-pass),)
 endif
 
 # Rules
+# SWISTART
+ifeq ($(LE_CONFIG_RTOS),y)
+all: .config lib/libtinycbor.a
+else
 all: .config lib/libtinycbor.a lib/libtinycbor.so bin/cbordump tinycbor.pc
+endif
+# SWISTOP
 all: $(if $(JSON2CBOR_SOURCES),bin/json2cbor)
 check: tests/Makefile | lib/libtinycbor.a
 	$(MAKE) -C tests check
